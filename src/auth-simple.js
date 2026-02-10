@@ -22,12 +22,16 @@ export const simpleAuth = {
   login: async (email, password) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
+        console.log('Attempting login with:', email, password); // Debug log
         const user = simpleAuth.users.find(u => u.email === email && u.password === password);
+        console.log('Found user:', user); // Debug log
         if (user) {
           // Store current user in localStorage
           localStorage.setItem('currentUser', JSON.stringify(user));
+          console.log('User stored in localStorage:', user); // Debug log
           resolve({ success: true, user });
         } else {
+          console.log('Login failed - user not found'); // Debug log
           reject(new Error('Invalid email or password'));
         }
       }, 500);
@@ -50,6 +54,7 @@ export const simpleAuth = {
   onAuthChange: (callback) => {
     // Simulate auth state change
     const user = simpleAuth.getCurrentUser();
+    console.log('Current user from localStorage:', user); // Debug log
     callback(user);
     return () => {}; // Return unsubscribe function
   }

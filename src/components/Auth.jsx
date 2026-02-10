@@ -29,21 +29,13 @@ const Auth = () => {
     try {
       let result;
       if (isLogin) {
-        result = await simpleAuth.login(formData.email, formData.password);
+        result = await signIn(formData.email, formData.password);
       } else {
-        // For signup, just login with the new user
-        const newUser = {
-          id: 'user-' + Date.now(),
-          email: formData.email,
-          name: formData.name,
-          role: formData.role
-        };
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
-        result = { success: true, user: newUser };
+        result = await signUp(formData.email, formData.password, formData.name, formData.role);
       }
 
       if (!result.success) {
-        setError(result.error || result.message);
+        setError(result.error);
       }
     } catch (err) {
       setError('An unexpected error occurred');
