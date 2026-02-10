@@ -2,15 +2,15 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// TODO: Replace with your actual Firebase configuration
-// Get these values from Firebase Console → Project Settings → Your Apps → Web App → Config
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_ACTUAL_API_KEY",
-  authDomain: "church-fund-tracker.firebaseapp.com",
-  projectId: "church-fund-tracker",
-  storageBucket: "church-fund-tracker.appspot.com",
-  messagingSenderId: "YOUR_ACTUAL_SENDER_ID",
-  appId: "YOUR_ACTUAL_APP_ID"
+  apiKey: "AIzaSyD_fdU6dMb_qvESIDnwCxOWXL7SZag714s",
+  authDomain: "church-fund-tracker-96677.firebaseapp.com",
+  projectId: "church-fund-tracker-96677",
+  storageBucket: "church-fund-tracker-96677.firebasestorage.app",
+  messagingSenderId: "485676176078",
+  appId: "1:485676176078:web:ef76e9edf61c102c32769f",
+  measurementId: "G-4QGCE5WR4P"
 };
 
 // Initialize Firebase
