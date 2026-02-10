@@ -8,7 +8,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from './config';
 
 // Sign up new user
-export const signUp = async (email, password, name) => {
+export const signUp = async (email, password, name, role = 'member') => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -18,7 +18,7 @@ export const signUp = async (email, password, name) => {
       uid: user.uid,
       email: user.email,
       name: name,
-      role: 'member', // Default role
+      role: role, // 'member' or 'admin'
       createdAt: new Date().toISOString()
     });
     

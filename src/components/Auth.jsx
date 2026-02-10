@@ -7,7 +7,8 @@ const Auth = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    name: ''
+    name: '',
+    role: 'member'
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ const Auth = () => {
       if (isLogin) {
         result = await signIn(formData.email, formData.password);
       } else {
-        result = await signUp(formData.email, formData.password, formData.name);
+        result = await signUp(formData.email, formData.password, formData.name, formData.role);
       }
 
       if (!result.success) {
@@ -61,24 +62,44 @@ const Auth = () => {
         <div className="card">
           <form onSubmit={handleSubmit} className="space-y-6">
             {!isLogin && (
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required={!isLogin}
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="input pl-10"
-                    placeholder="Enter your full name"
-                  />
+              <>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required={!isLogin}
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="input pl-10"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
                 </div>
-              </div>
+
+                <div>
+                  <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
+                    User Role
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="role"
+                      name="role"
+                      value={formData.role}
+                      onChange={handleInputChange}
+                      className="input"
+                    >
+                      <option value="member">Church Member</option>
+                      <option value="admin">Administrator</option>
+                    </select>
+                  </div>
+                </div>
+              </>
             )}
 
             <div>

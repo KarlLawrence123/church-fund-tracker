@@ -2,13 +2,15 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+// TODO: Replace with your actual Firebase configuration
+// Get these values from Firebase Console → Project Settings → Your Apps → Web App → Config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "YOUR_ACTUAL_API_KEY",
   authDomain: "church-fund-tracker.firebaseapp.com",
   projectId: "church-fund-tracker",
   storageBucket: "church-fund-tracker.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  messagingSenderId: "YOUR_ACTUAL_SENDER_ID",
+  appId: "YOUR_ACTUAL_APP_ID"
 };
 
 // Initialize Firebase
