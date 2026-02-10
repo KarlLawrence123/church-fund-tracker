@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { signIn, signUp } from '../firebase/auth';
+import simpleAuth from '../auth-simple';
 import { Church, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 const Auth = () => {
@@ -29,13 +29,21 @@ const Auth = () => {
     try {
       let result;
       if (isLogin) {
-        result = await signIn(formData.email, formData.password);
+        result = await simpleAuth.login(formData.email, formData.password);
       } else {
-        result = await signUp(formData.email, formData.password, formData.name, formData.role);
+        // For signup, just login with the new user
+        const newUser = {
+          id: 'user-' + Date.now(),
+          email: formData.email,
+          name: formData.name,
+          role: formData.role
+        };
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+        result = { success: true, user: newUser };
       }
 
       if (!result.success) {
-        setError(result.error);
+        setError(result.error || result.message);
       }
     } catch (err) {
       setError('An unexpected error occurred');

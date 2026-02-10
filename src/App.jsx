@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { onAuthChange } from './firebase/auth';
+import simpleAuth from './auth-simple';
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
 import Members from './components/Members';
@@ -14,7 +14,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthChange((authUser) => {
+    const unsubscribe = simpleAuth.onAuthChange((authUser) => {
       setUser(authUser);
       setLoading(false);
     });

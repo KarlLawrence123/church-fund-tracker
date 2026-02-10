@@ -9,7 +9,7 @@ import {
   LogOut,
   Church 
 } from 'lucide-react';
-import { logOut } from '../firebase/auth';
+import simpleAuth from '../auth-simple';
 import { useState } from 'react';
 
 const Layout = ({ user, children }) => {
@@ -17,7 +17,7 @@ const Layout = ({ user, children }) => {
   const location = useLocation();
 
   const handleLogout = async () => {
-    await logOut();
+    await simpleAuth.logout();
   };
 
   const navigation = [

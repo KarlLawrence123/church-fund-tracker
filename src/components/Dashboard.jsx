@@ -10,11 +10,11 @@ import {
   Plus
 } from 'lucide-react';
 import { 
-  getMembers, 
-  getWeeklyContributions, 
-  getExpenses, 
-  getWeeklySummaries 
-} from '../firebase/firestore';
+  mockMembers, 
+  mockContributions, 
+  mockExpenses, 
+  mockWeeklySummaries 
+} from '../data-mock';
 import { format, startOfWeek, endOfWeek, subWeeks } from 'date-fns';
 
 const Dashboard = () => {
@@ -42,38 +42,22 @@ const Dashboard = () => {
       const weekStart = startOfWeek(now, { weekStartsOn: 0 }); // Sunday
       const weekEnd = endOfWeek(now, { weekStartsOn: 0 });
       
-      // Fetch data
-      const [membersRes, contributionsRes, expensesRes, summariesRes] = await Promise.all([
-        getMembers(),
-        getWeeklyContributions(weekStart, weekEnd),
-        getExpenses(weekStart, weekEnd),
-        getWeeklySummaries(4)
-      ]);
-
-      if (membersRes.success) {
-        const totalMembers = membersRes.data.length;
-        const weeklyExpected = totalMembers * 30; // ₱30 per member
-        
-        const weeklyActual = contributionsRes.success 
-          ? contributionsRes.data.reduce((sum, contribution) => sum + contribution.amount, 0)
-          : 0;
-          
-        const totalExpenses = expensesRes.success
-          ? expensesRes.data.reduce((sum, expense) => sum + expense.amount, 0)
-          : 0;
-          
-        const totalBalance = weeklyActual - totalExpenses;
-
-        setStats({
-          totalMembers,
-          weeklyExpected,
-          weeklyActual,
-          totalBalance,
-          recentContributions: contributionsRes.success ? contributionsRes.data.slice(0, 5) : [],
-          recentExpenses: expensesRes.success ? expensesRes.data.slice(0, 5) : [],
-          weeklySummaries: summariesRes.success ? summariesRes.data : []
-        });
-      }
+      // Use mock data instead of Firebase calls
+      const totalMembers = mockMembers.length;
+      const weeklyExpected = totalMembers * 30; // ₱30 per member
+      const weeklyActual = mockContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
+      const totalExpenses = mockExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+      const runningBalance = weeklyActual - totalExpenses;
+      
+      setStats({
+        totalMembers,
+        weeklyExpected,
+        weeklyActual,
+        totalBalance: runningBalance,
+        recentContributions: mockContributions.slice(0, 5),
+        recentExpenses: mockExpenses.slice(0, 5),
+        weeklySummaries: mockWeeklySummaries
+      });
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {
